@@ -4,9 +4,9 @@ import Booking from "@/../../models/Booking";
 
 
 export async function POST(request) {
-    const { title, description, link, number } = await request.json();
+    const { service, date, duration, phone, time } = await request.json();
     await connectMongoDB();
-    await Booking.create({ title, description, link, number });
+    await Booking.create({ service, date, duration, phone, time });
     return NextResponse.json({ message: "Booking Created"}, { status: 201 })
 }
 

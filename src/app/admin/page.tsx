@@ -1,8 +1,11 @@
+import Bookings from "../../../components/Bookings"
 
 
 const page = () => {
     return(
-        <h1>admin</h1>
+        <>
+            <Bookings />
+        </>
     )
 }
 

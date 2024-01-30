@@ -105,6 +105,20 @@ export default function Home() {
           </li>
         </ol>
         </div>
+
+        <div className='mx-auto mb-32 mt-32 max-w-5xl sm:mt-56'>
+        <div className='mb-12 px-6 lg:px-8'>
+          <div className='mx-auto max-w-2xl sm:text-center'>
+            <h2 className='mt-2 font-bold text-4xl text-gray-900 sm:text-5xl'>
+              Companys using Vertio
+            </h2>
+            {/* Firma som bruker vertio */}
+            <div className='mt-4 text-lg'>
+              Booking has never been easier than with Vertio.
+            </div>
+          </div>
+        </div>
+        </div>
     </>
   );
 }

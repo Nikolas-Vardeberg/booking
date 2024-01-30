@@ -1,11 +1,12 @@
 import mongoose, { Schema } from "mongoose";
 
-const bookingSchema = new Schema(
+const bookingSchema = new mongoose.Schema(
     {
-        title: String,
-        description: String,
-        link: String,
-        number: String,
+        service: String,
+        date: String,
+        duration: String,
+        phone: String,
+        time: String,
     },
     {
         timestamps: true
