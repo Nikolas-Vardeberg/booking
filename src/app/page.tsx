@@ -116,7 +116,10 @@ export default function Home() {
             <div className='mt-4 text-lg'>
               Booking has never been easier than with Vertio.
             </div>
+
+
           </div>
+
         </div>
         </div>
     </>
