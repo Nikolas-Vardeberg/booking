@@ -13,16 +13,16 @@ const page = () => {
     const pricingItems = [
         {
           plan: 'Free',
-          tagline: 'For small side projects.',
+          tagline: 'Ideal for smaller bookings.',
           quota: 10,
           features: [
             {
-              text: '5 pages per PDF',
-              footnote: 'The maximum amount of pages per PDF-file.',
+              text: '5 bookings per day',
+              footnote: 'The maximum number of bookings allowed per day',
             },
             {
               text: '4MB file size limit',
-              footnote: 'The maximum file size of a single PDF file.',
+              footnote: 'The maximum file size for each booking request.',
             },
             {
               text: 'Mobile-friendly interface',
@@ -40,23 +40,23 @@ const page = () => {
         },
         {
           plan: 'Pro',
-          tagline: 'For larger projects with higher needs.',
+          tagline: 'For extensive bookings and advanced requirements.',
           quota: PLANS.find((p) => p.slug === 'pro')!.quota,
           features: [
             {
-              text: '25 pages per PDF',
-              footnote: 'The maximum amount of pages per PDF-file.',
+              text: 'Unlimited bookings',
+              footnote: 'No limit on the number of bookings allowed.',
             },
             {
               text: '16MB file size limit',
-              footnote: 'The maximum file size of a single PDF file.',
+              footnote: 'The maximum file size for each booking request.',
             },
             {
               text: 'Mobile-friendly interface',
             },
             {
               text: 'Higher-quality responses',
-              footnote: 'Better algorithmic responses for enhanced content quality',
+              footnote: 'Top-tier algorithmic responses for superior content quality',
             },
             {
               text: 'Priority support',
