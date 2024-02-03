@@ -4,6 +4,7 @@ import "./globals.css";
 import "./styles/Calendar.css";
 import { cn } from "../../lib/utils";
 import NavBar from "../components/NavBar";
+import Providers from "@/components/Providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,10 +20,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <Providers>
       <body className={inter.className}>
         <NavBar />
         {children}
         </body>
+      </Providers>
     </html>
   );
 }
