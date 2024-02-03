@@ -1,4 +1,4 @@
-import Bookings from "../../../components/Bookings"
+import Bookings from "../../components/Bookings"
 
 
 const page = () => {

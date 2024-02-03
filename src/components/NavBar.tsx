@@ -1,4 +1,4 @@
-import { buttonVariants } from "../components/ui/button"
+import { buttonVariants } from "./ui/button"
 import MaxWidthWrapper from "./MaxWidthWrapper"
 import Link from "next/link"
 import { LoginLink, RegisterLink } from "@kinde-oss/kinde-auth-nextjs/server"
