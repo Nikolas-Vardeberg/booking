@@ -19,7 +19,6 @@ const NavBar = async () => {
 
                 {/* */}
                 <div className="hidden items-center space-x-4 sm:flex">
-                {!user ? (
               <>
                 <Link
                   href='/pricing'
@@ -44,18 +43,6 @@ const NavBar = async () => {
                   <ArrowRight className='ml-1.5 h-5 w-5' />
                 </RegisterLink>
               </>
-            ) : (
-              <>
-                <Link
-                  href='/dashboard'
-                  className={buttonVariants({
-                    variant: 'ghost',
-                    size: 'sm',
-                  })}>
-                  Dashboard
-                </Link>
-              </>
-            )}
 
                 </div>
             </div>

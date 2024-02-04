@@ -60,18 +60,18 @@ const page = () => {
               key={service}
               onClick={() => handleOnClick(service)}
               className={cn(
-                'relative rounded-md bg-white border-gray-200 hover:border-green-500 transition-all p-6 w-full',
+                'relative rounded-md bg-white border-gray-200 hover:border-black transition-all p-6 w-full',
                 {
                   'border-2 shadow-green-200':
                     anbefalt === "true",
                   'border-2 border-gray-200 mt-3':
                     anbefalt !== "true",
-                    'border-green-500': clickedService === service,
+                    'border-black': clickedService === service,
                 }
               )}
               >
                  {anbefalt === "true" && (
-                    <div className='absolute -top-5 left-0 right-0 mx-auto w-fit rounded-full bg-gradient-to-r from-green-400 to-green-400 px-3 py-2 text-sm font-medium text-white'>
+                    <div className='absolute -top-5 left-0 right-0 mx-auto w-fit rounded-full bg-gradient-to-r from-black to-black px-3 py-2 text-sm font-medium text-white'>
                       Anbefalt
                     </div>
                   )}
@@ -84,7 +84,7 @@ const page = () => {
                     <Tooltip
                       delayDuration={300}>
                       <TooltipTrigger className='cursor-default ml-1.5'>
-                        <Info className='ml-2 h-5 w-5  text-green-500' />
+                        <Info className='ml-2 h-5 w-5  text-gray-500' />
                       </TooltipTrigger>
                         <TooltipContent className='w-fit p-2 '>
                           {info}
@@ -99,7 +99,7 @@ const page = () => {
           </TooltipProvider>
 
           <Button
-            className={buttonVariants({ size: "lg", className: "mt-8 bg-green-500 hover:bg-green-700" })}
+            className={buttonVariants({ size: "lg", className: "mt-8 " })}
             disabled={clickedService === null}
           >
             Bestill Time</Button>

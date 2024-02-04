@@ -1,4 +1,4 @@
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server"
+import { LogoutLink, getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server"
 import { redirect } from "next/navigation"
 
 const page = async () => {
@@ -13,6 +13,7 @@ const page = async () => {
             <h1>{user.email}</h1>
             <h1>{user.given_name}</h1>
             <h1>{user.family_name}</h1>
+            <LogoutLink>Log out</LogoutLink>
         </>
     )
 }
