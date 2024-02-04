@@ -1,241 +1,111 @@
+"use client"
+
+import MaxWidthWrapper from "@/components/MaxWidthWrapper"
+import { Button, buttonVariants } from "@/components/ui/button"
+import { TooltipTrigger, Tooltip, TooltipContent, TooltipProvider } from "@/components/ui/tooltip"
+import { cn } from "@/lib/utils"
+import { ArrowRight, HelpCircle, Info } from "lucide-react"
+import { useState } from "react"
 
 
 const page = () => {
+  const [clickedService, setClickedService] = useState(null);
+  const [steps, setSteps] = useState(1);
+
+  const serviceList = [
+    {
+      anbefalt: "true",
+      service: "Kort hår klypp",
+      description: "Professionell klipp av kort hår for en stilig og frisk look.",
+      info: ["Passer både for menn og kvinner."]
+    },
+    {
+      anbefalt: "false",
+      service: "Lang hår klypp",
+      description: "Langvarig klipp og stell for de som ønsker å bevare lengden på håret.",
+      info: ["Passer både for menn og kvinner."]
+    },
+    {
+      anbefalt: "false",
+      service: "Rensing av hår",
+      description: "Dyprengjøring av håret for en frisk og sunn hodebunn.",
+      info: ["Passer både for menn og kvinner."]
+    }
+  ];
+
+  const handleOnClick = (service: string) => {
+    setClickedService(service);
+    console.log(service)
+  }
+
     return(
-  <div className="flex items-center justify-center w-full min-h-screen bg-gray-50">
-    <div className="flex bg-white shadow-lg rounded-xl">
-      <div className="flex flex-col">
-        <div className="flex divide-x">
-          <div className="flex flex-col px-6 pt-5 pb-6 border-b border-gray-100">
-            <div className="flex items-center justify-between">
-              <button
-                className="flex items-center justify-center p-2 rounded-xl hover:bg-gray-50"
-              >
-                <svg className="w-6 h-6 text-gray-900 stroke-current" fill="none">
-                  <path
-                    d="M13.25 8.75L9.75 12l3.5 3.25"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              </button>
-              <div className="text-lg font-semibold">February</div>
-              <button
-                className="flex items-center justify-center p-2 rounded-xl hover:bg-gray-50"
-              >
-                <svg className="w-6 h-6 text-gray-900 stroke-current" fill="none">
-                  <path
-                    d="M10.75 8.75l3.5 3.25-3.5 3.25"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              </button>
-            </div>
-            <div className="grid grid-cols-7 text-base text-center text-gray-900">
-              <span
-                className="flex items-center justify-center w-10 h-10 font-semibold rounded-lg"
-              >
-                Man
-              </span>
-              <span
-                className="flex items-center justify-center w-10 h-10 font-semibold rounded-lg"
-              >
-                Tir
-              </span>
-              <span
-                className="flex items-center justify-center w-10 h-10 font-semibold rounded-lg"
-              >
-                Ons
-              </span>
-              <span
-                className="flex items-center justify-center w-10 h-10 font-semibold rounded-lg"
-              >
-                Tor
-              </span>
-              <span
-                className="flex items-center justify-center w-10 h-10 font-semibold rounded-lg"
-              >
-                Fre
-              </span>
-              <span
-                className="flex items-center justify-center w-10 h-10 font-semibold rounded-lg"
-              >
-                Lør
-              </span>
-              <span
-                className="flex items-center justify-center w-10 h-10 font-semibold rounded-lg"
-              >
-                Søn
-              </span>
+      <>
+      <MaxWidthWrapper>
+        <div className='w-full mt-24 flex justify-center'>
+           <div className='flex flex-col items-center gap-2'>
+             <h3 className='font-semibold text-3xl'>
+               Velg Avtale Type
+             </h3>
+             <p>Velg en avtaletype hos vår buttik i hamar.</p>
+           </div>
+         </div>
 
-              <span
-                className="flex items-center justify-center w-10 h-10 text-gray-700 rounded-lg hover:bg-gray-50"
-              >
-                1
-              </span>
-              <span
-                className="flex items-center justify-center w-10 h-10 text-gray-700 rounded-lg hover:bg-gray-50"
-              >
-                2
-              </span>
-              <span
-                className="flex items-center justify-center w-10 h-10 text-gray-700 rounded-lg hover:bg-gray-50"
-              >
-                3
-              </span>
-              <span
-                className="flex items-center justify-center w-10 h-10 text-gray-700 rounded-lg hover:bg-gray-50"
-              >
-                4
-              </span>
-              <span
-                className="flex items-center justify-center w-10 h-10 text-gray-700 rounded-lg hover:bg-gray-50 "
-              >
-                5
-              </span>
-              <span
-                className="flex items-center justify-center w-10 h-10 text-gray-700 rounded-lg hover:bg-gray-50 "
-              >
-                6
-              </span>
-              <span
-                className="flex items-center justify-center w-10 h-10 text-gray-700 rounded-lg hover:bg-gray-50"
-              >
-                7
-              </span>
+        <div className='mt-16 flex flex-col items-center gap-2'>
+          {/* first list */}
+          <TooltipProvider>
 
-              <span className="flex items-center justify-center w-10 h-10 rounded-lg">8</span>
-              <span
-                className="flex items-center justify-center w-10 h-10 rounded-lg hover:bg-gray-50"
+          {serviceList.map(
+             ({ service, description, info, anbefalt}) => {
+              return <div
+              key={service}
+              onClick={() => handleOnClick(service)}
+              className={cn(
+                'relative rounded-md bg-white border-gray-200 hover:border-green-500 transition-all p-6 w-full',
+                {
+                  'border-2 shadow-green-200':
+                    anbefalt === "true",
+                  'border-2 border-gray-200 mt-3':
+                    anbefalt !== "true",
+                    'border-green-500': clickedService === service,
+                }
+              )}
               >
-                9
-              </span>
-              <span className="flex items-center justify-center w-10 h-10 rounded-lg hover:bg-gray-50">
-                10
-              </span>
-              <span className="flex items-center justify-center w-10 h-10 rounded-lg hover:bg-gray-50">
-                11
-              </span>
-              <span className="flex items-center justify-center w-10 h-10 rounded-lg hover:bg-gray-50">
-                12
-              </span>
-              <span className="flex items-center justify-center w-10 h-10 rounded-lg hover:bg-gray-50">
-                13
-              </span>
-              <span className="flex items-center justify-center w-10 h-10 rounded-lg hover:bg-gray-50">
-                14
-              </span>
+                 {anbefalt === "true" && (
+                    <div className='absolute -top-5 left-0 right-0 mx-auto w-fit rounded-full bg-gradient-to-r from-green-400 to-green-400 px-3 py-2 text-sm font-medium text-white'>
+                      Anbefalt
+                    </div>
+                  )}
 
-              <span className="flex items-center justify-center w-10 h-10 rounded-lg hover:bg-gray-50">
-                15
-              </span>
-              <span className="flex items-center justify-center w-10 h-10 rounded-lg hover:bg-gray-50">
-                16
-              </span>
-              <span className="flex items-center justify-center w-10 h-10 rounded-lg hover:bg-gray-50">
-                17
-              </span>
-              <span
-                className="flex items-center justify-center w-10 h-10 rounded-lg hover:bg-gray-50" 
-              >
-                18
-              </span>
-              <span
-                 className="flex items-center justify-center w-10 h-10 rounded-lg hover:bg-gray-50"
-              >
-                19
-              </span>
-              <span
-                 className="flex items-center justify-center w-10 h-10 rounded-lg hover:bg-gray-50"
-              >
-                20
-              </span>
-              <span
-                className="flex items-center justify-center w-10 h-10 rounded-lg hover:bg-gray-50"
-              >
-                21
-              </span>
+                  <div>
+                    <div className="flex justify-between">
+                    <h3 className='my-3 text-3xl font-bold'>
+                      {service}
+                    </h3>
+                    <Tooltip
+                      delayDuration={300}>
+                      <TooltipTrigger className='cursor-default ml-1.5'>
+                        <Info className='ml-2 h-5 w-5  text-green-500' />
+                      </TooltipTrigger>
+                        <TooltipContent className='w-fit p-2 '>
+                          {info}
+                        </TooltipContent>
+                    </Tooltip>
+                    </div>
+                    <p>{description}</p>
+                  </div>
+              </div>
+             }
+          )}
+          </TooltipProvider>
 
-              <span
-                className="flex items-center justify-center w-10 h-10 rounded-lg hover:bg-gray-50" 
-              >
-                22
-              </span>
-              <span
-                 className="flex items-center justify-center w-10 h-10 rounded-lg hover:bg-gray-50"
-              >
-                23
-              </span>
-              <span
-                className="flex items-center justify-center w-10 h-10 rounded-lg hover:bg-gray-50"
-              >
-                24
-              </span>
-              <span
-                 className="flex items-center justify-center w-10 h-10 rounded-lg hover:bg-gray-50"
-              >
-                25
-              </span>
-              <span
-                className="flex items-center justify-center w-10 h-10 rounded-lg hover:bg-gray-50"
-              >
-                26
-              </span>
-              <span
-                 className="flex items-center justify-center w-10 h-10 rounded-lg hover:bg-gray-50"
-              >
-                27
-              </span>
-              <span
-                 className="flex items-center justify-center w-10 h-10 rounded-lg hover:bg-gray-50"
-              >
-                28
-              </span>
-
-              <span
-                className="flex items-center justify-center w-10 h-10 text-gray-700 rounded-lg"
-              >
-                1
-              </span>
-              <span
-                className="flex items-center justify-center w-10 h-10 text-gray-700 rounded-lg"
-              >
-                2
-              </span>
-              <span
-                className="flex items-center justify-center w-10 h-10 text-gray-700 rounded-lg"
-              >
-                3
-              </span>
-              <span
-                className="flex items-center justify-center w-10 h-10 text-gray-700 rounded-lg"
-              >
-                4
-              </span>
-              <span
-                className="flex items-center justify-center w-10 h-10 text-gray-700 rounded-lg"
-              >
-                5
-              </span>
-              <span
-                className="flex items-center justify-center w-10 h-10 text-gray-700 rounded-lg"
-              >
-                6
-              </span>
-              <span
-                className="flex items-center justify-center w-10 h-10 text-gray-700 rounded-lg"
-              >
-                7
-              </span>
-            </div>
-          </div>
+          <Button
+            className={buttonVariants({ size: "lg", className: "mt-8 bg-green-500 hover:bg-green-700" })}
+            disabled={clickedService === null}
+          >
+            Bestill Time</Button>
         </div>
-      </div>
-    </div>
-  </div>
+        </MaxWidthWrapper>
+      </>
     )
 }
 
