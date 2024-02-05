@@ -21,9 +21,7 @@ const index: FC<indexProps> = ({}) => {
   const [clickedService, setClickedService] = useState(null);
   const [steps, setSteps] = useState(2);
   const [isLoading, setIsLoading] = useState(false);
-  const [currentDate, setCurrentDate] = useState(new Date());
-  const [isDatePassed, setIsDatePassed] = useState(false);
-  const daysToAdd = 5;
+
   
 
   const serviceList = [
@@ -52,34 +50,13 @@ const index: FC<indexProps> = ({}) => {
     console.log(service)
   }
 
-  const handleDateChange = (direction) => {
-    const newDate = new Date(currentDate);
+  
 
-    if (direction === 'prev') {
-      newDate.setDate(currentDate.getDate() - daysToAdd);
-    } else if (direction === 'next') {
-      newDate.setDate(currentDate.getDate() + daysToAdd);
-    }
+  
 
-    setCurrentDate(newDate);
-  };
+  
+  
 
-  const handleDateClick = (index) => {
-    const clickedDate = new Date(currentDate.getTime() + index * 24 * 60 * 60 * 1000);
-    const isPassed = clickedDate < new Date();
-
-    setIsDatePassed(isPassed);
-
-    console.log(`clicked: ${clickedDate.toISOString().split('T')[0]}, passed: ${isPassed}`);
-};
-
-  const formatDate = (date) => {
-    const daysOfWeek = ['søn', 'man', 'tir', 'ons', 'tor', 'fre', 'lør'];
-    const dayOfWeek = daysOfWeek[date.getDay()];
-    const dayNumber = date.getDate();
-
-    return `${dayOfWeek} ${dayNumber}`;
-  };
 
     return(
         <div>
@@ -184,7 +161,6 @@ const index: FC<indexProps> = ({}) => {
                             <div className="border-b w-full h-12 mt-2">
                             <div className="flex items-center justify-between m-2">
                                 <button
-                                    onClick={() => handleDateChange('prev')}
                                     className="flex items-center justify-center "
                                 >
                                     <svg className="w-6 h-6 text-gray-900 stroke-current" fill="none">
@@ -197,14 +173,14 @@ const index: FC<indexProps> = ({}) => {
                                     </svg>
                                 </button>
 
-                                {[0, 1, 2, 3, 4].map((index) => (
-                                    <div key={index} className="text-sm font-semibold hover:font-extrabold" onClick={() => handleDateClick(index)}>
-                                        {formatDate(new Date(currentDate.getTime() + index * 24 * 60 * 60 * 1000))}
-                                    </div>
-                                ))}
+                                <div>man 5</div>
+                                <div>tir 6</div>
+                                <div>ons 7</div>
+                                <div>tor 8</div>
+                                <div>fre 9</div>
+
                                 <button
                                     className="flex items-center justify-center "
-                                    onClick={() => handleDateChange('next')}
                                 >
                                     <svg className="w-6 h-6 text-gray-900 stroke-current" fill="none">
                                     <path
@@ -219,29 +195,33 @@ const index: FC<indexProps> = ({}) => {
                             </div>
 
                             {/* content */}
-                            <div className='h-80 bg-gray-200 w-full'>
-                                {isDatePassed ? (
-                                     <div className='w-full mt-24 flex justify-center'>
-                                        <div className='flex flex-col items-center text-center gap-2'>
-                                            <h3 className='font-semibold text-2xl'>
-                                            Datoen er ikke tilgjengelig
-                                            </h3>
-                                            <p>Beklager ulempen. Det kan være at de har utgått eller er utilgjengelige for øyeblikket.</p>
+                                    <div className='h-80 bg-gray-200 w-full'>
+                                        <div className='w-full mt-24 flex justify-center'>
+                                            <div className='flex flex-col items-center text-center gap-2'>
+                                                <h3 className='font-semibold text-2xl'>
+                                                Datoen er ikke tilgjengelig
+                                                </h3>
+                                                <p>Beklager ulempen. Det kan være at de har utgått eller er utilgjengelige for øyeblikket.</p>
+                                            </div>
                                         </div>
                                     </div>
-                                ) : (
-                                    <h1>not passed</h1>
-                                )}
                             </div>
-                        </div>
-
                         </>
                     )}
                 </>
             )}
             {steps === 3 && (
                 <div>
-                    <h1>step 3</h1>
+                     <MaxWidthWrapper>
+                        <div className='w-full mt-24 flex justify-center'>
+                            <div className='flex flex-col items-center gap-2'>
+                                <h3 className='font-semibold text-3xl'>
+                                Velg Avtale Type
+                                </h3>
+                                <p>Velg en avtaletype hos vår buttik i hamar.</p>
+                            </div>
+                        </div>
+                        </MaxWidthWrapper>
                 </div>
             )}
             {steps === 4 && (
