@@ -1,6 +1,6 @@
 "use client"
 
-import { FC, useState } from'react'
+import { FC, useEffect, useState } from'react'
 import ReactCalendar from "react-calendar";
 import {add, format} from "date-fns";
 import MaxWidthWrapper from '@/components/MaxWidthWrapper';
@@ -8,6 +8,8 @@ import { Info, Loader2 } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
 import { Button, buttonVariants } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 interface indexProps {}
 
@@ -19,8 +21,12 @@ interface DateTypes {
 
 const index: FC<indexProps> = ({}) => {
   const [clickedService, setClickedService] = useState(null);
-  const [steps, setSteps] = useState(2);
+  const [steps, setSteps] = useState(3);
   const [isLoading, setIsLoading] = useState(false);
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const [isDatePassed, setIsDatePassed] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const daysToAdd = 5;
 
   
 
@@ -50,13 +56,77 @@ const index: FC<indexProps> = ({}) => {
     console.log(service)
   }
 
-  
+  const handleDateChange = (direction) => {
+  const newHeaderDate = new Date(currentDate);
+
+  if (direction === 'prev') {
+    newHeaderDate.setDate(newHeaderDate.getDate() - daysToAdd);
+  } else if (direction === 'next') {
+    newHeaderDate.setDate(newHeaderDate.getDate() + daysToAdd);
+  }
+
+  setCurrentDate(newHeaderDate);
+};
+
+const handleDateClick = (index) => {
+  const clickedDate = new Date(currentDate.getTime() + index * 24 * 60 * 60 * 1000);
+
+  // Check if the clicked date is in the future
+  const today = new Date();
+  today.setHours(0, 0, 0, 0); // Reset hours to compare only the date part
+
+  if (clickedDate < today) {
+    setIsDatePassed(true);
+    setSelectedDate(null);
+  } else {
+    setIsDatePassed(false);
+    setSelectedDate(clickedDate);
+
+    // If clicked date is today, log availability for each hour and minute
+    if (
+      clickedDate.getDate() === today.getDate() &&
+      clickedDate.getMonth() === today.getMonth() &&
+      clickedDate.getFullYear() === today.getFullYear()
+    ) {
+      const currentHour = today.getHours();
+      const currentMinute = today.getMinutes();
+      const remainingHours = 24 - currentHour; // Total hours remaining in the day
+
+      console.log('Availability for each hour and minute:');
+      for (let i = currentHour; i < 24; i++) {
+        for (let j = (i === currentHour ? currentMinute : 0); j < 60; j++) {
+          // Replace this condition with your logic to check availability
+          const isAvailable = i > currentHour || (i === currentHour && j >= currentMinute);
+
+          const formattedHour = String(i).padStart(2, '0'); // Format as two digits
+          const formattedMinute = String(j).padStart(2, '0'); // Format as two digits
+
+          console.log(`${formattedHour}:${formattedMinute}: ${isAvailable ? 'available' : 'not available'}`);
+        }
+      }
+    }
+  }
+};
 
   
 
   
   
+  const formatDate = (date) => {
+    const daysOfWeek = ['søn', 'man', 'tir', 'ons', 'tor', 'fre', 'lør'];
+    const dayOfWeek = daysOfWeek[date.getDay()];
+    const dayNumber = date.getDate();
 
+    return `${dayOfWeek} ${dayNumber}`;
+  };
+
+  const formatClickedDate = (date) => {
+    if (!date) {
+      return "No date selected"; // or any default value or message
+    }
+  
+    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+  };
 
     return(
         <div>
@@ -161,6 +231,7 @@ const index: FC<indexProps> = ({}) => {
                             <div className="border-b w-full h-12 mt-2">
                             <div className="flex items-center justify-between m-2">
                                 <button
+                                    onClick={() => handleDateChange('prev')}
                                     className="flex items-center justify-center "
                                 >
                                     <svg className="w-6 h-6 text-gray-900 stroke-current" fill="none">
@@ -173,14 +244,18 @@ const index: FC<indexProps> = ({}) => {
                                     </svg>
                                 </button>
 
-                                <div>man 5</div>
-                                <div>tir 6</div>
-                                <div>ons 7</div>
-                                <div>tor 8</div>
-                                <div>fre 9</div>
-
+                                {[0, 1, 2, 3, 4].map((index) => (
+                                    <div
+                                    key={index}
+                                    className="text-sm font-semibold hover:font-extrabold cursor-pointer"
+                                    onClick={() => handleDateClick(index)}
+                                    >
+                                        {formatDate(new Date(currentDate.getTime() + index * 24 * 60 * 60 * 1000))}
+                                    </div>
+                                ))}
                                 <button
                                     className="flex items-center justify-center "
+                                    onClick={() => handleDateChange('next')}
                                 >
                                     <svg className="w-6 h-6 text-gray-900 stroke-current" fill="none">
                                     <path
@@ -195,6 +270,8 @@ const index: FC<indexProps> = ({}) => {
                             </div>
 
                             {/* content */}
+                            {isDatePassed ? (
+                                <>
                                     <div className='h-80 bg-gray-200 w-full'>
                                         <div className='w-full mt-24 flex justify-center'>
                                             <div className='flex flex-col items-center text-center gap-2'>
@@ -205,6 +282,24 @@ const index: FC<indexProps> = ({}) => {
                                             </div>
                                         </div>
                                     </div>
+                                </>
+                            ): (
+                                <>
+                                    <div className='h-80 bg-gray-200 w-full'>
+                                        <div className='w-full mt-24 flex justify-center'>
+                                            <div className='flex flex-col items-center text-center gap-2'>
+                                                <h3 className='font-semibold text-2xl'>
+                                                    {formatClickedDate(selectedDate)}
+                                                </h3>
+                                                <p>
+                                                    
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </>
+                            )}
+                            
                             </div>
                         </>
                     )}
@@ -212,15 +307,45 @@ const index: FC<indexProps> = ({}) => {
             )}
             {steps === 3 && (
                 <div>
-                     <MaxWidthWrapper>
+                     <MaxWidthWrapper className='flex flex-col items-center'>
                         <div className='w-full mt-24 flex justify-center'>
                             <div className='flex flex-col items-center gap-2'>
-                                <h3 className='font-semibold text-3xl'>
-                                Velg Avtale Type
+                                <h3 className='font-semibold text-3xl text-center'>
+                                    Tell us who is coming
                                 </h3>
-                                <p>Velg en avtaletype hos vår buttik i hamar.</p>
+                                <p>All fields marked with * are mandatory.</p>
                             </div>
                         </div>
+
+                        <div className='mt-12 mb-10 flex flex-col items-center border p-10 bg-gray-50 rounded-lg'>
+                            
+                        <div className=' w-full'>
+                            <div className="flex gap-4">
+                                <div className="flex flex-col gap-4">
+                                    <Label htmlFor="fornavn">First Name*</Label>
+                                <Input type="text" id="fornavn" placeholder="First Name" className='outline-none' />
+                                </div>
+                                <div className="flex flex-col gap-4">
+                                    <Label htmlFor="etternavn">Last Name*</Label>
+                                    <Input type="text" id="etternavn" placeholder="Last Name" className='outline-none' />
+                                </div>
+                            </div>
+                        </div>
+
+                            <div className="grid w-full items-center mt-5 gap-4">
+                                <Label htmlFor="email">Email*</Label>
+                                <Input type="email" id="email" placeholder="Email" className='outline-none' />
+                            </div>
+                            <div className="grid w-full items-center mt-5 gap-4">
+                                <Label htmlFor="telefon">Phone*</Label>
+                                <Input type="telefon" id="telefon" placeholder="Phone" className='outline-none' />
+                            </div>
+
+
+                        </div>
+
+                        <Button disabled className={buttonVariants({size: "lg"})}>Se Din Booking</Button>
+
                         </MaxWidthWrapper>
                 </div>
             )}
