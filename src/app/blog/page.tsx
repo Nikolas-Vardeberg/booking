@@ -10,17 +10,16 @@ import Link from "next/link";
 async function getData() {
     const query =`
     *[_type == "blog"] | order(_createdAt desc) {
-      title,
+        title,
         smallDescription,
         "currentSlug": slug.current,
-        titleImage
+        titleImage,
     }`;
   
     const data = await client.fetch(query);
   
     return data;
-  }
-  
+}
 
 export default async function page() {
     const data: simpleBlogCard[] = await getData();

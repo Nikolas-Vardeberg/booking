@@ -21,7 +21,7 @@ interface DateTypes {
 
 const index: FC<indexProps> = ({}) => {
   const [clickedService, setClickedService] = useState(null);
-  const [steps, setSteps] = useState(3);
+  const [steps, setSteps] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [currentDate, setCurrentDate] = useState(new Date());
   const [isDatePassed, setIsDatePassed] = useState(false);
@@ -132,7 +132,7 @@ const handleDateClick = (index) => {
         <div>
             {steps === 1 && (
                 <>
-                    <MaxWidthWrapper>
+                    <MaxWidthWrapper className='my-8'>
                         <div className='w-full mt-24 flex justify-center'>
                             <div className='flex flex-col items-center gap-2'>
                                 <h3 className='font-semibold text-3xl'>
@@ -194,6 +194,7 @@ const handleDateClick = (index) => {
                         <Button
                             className={buttonVariants({ size: "lg", className: "mt-8 " })}
                             disabled={clickedService === null}
+                            onClick={() => setSteps(2)}
                         >
                             Bestill Time</Button>
                         </div>
@@ -291,9 +292,9 @@ const handleDateClick = (index) => {
                                                 <h3 className='font-semibold text-2xl'>
                                                     {formatClickedDate(selectedDate)}
                                                 </h3>
-                                                <p>
-                                                    
-                                                </p>
+                                                <Button onClick={() => setSteps(3)}>
+                                                    go to next step
+                                                </Button>
                                             </div>
                                         </div>
                                     </div>
