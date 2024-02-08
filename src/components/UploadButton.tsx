@@ -22,7 +22,7 @@ const UploadButton = () => {
 
 
             <DialogContent>
-                example content
+                Bookingsform, navn, email, åpningstider, åpningsdager man-søn  
             </DialogContent>
         </Dialog>
     )
